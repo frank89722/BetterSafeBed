@@ -8,12 +8,7 @@ import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class MixinCallbacks {
-	/**
-	 * Called from ServerPlayerEntityMixin after nearby monsters are queried in ServerPlayerEntity::trySleep
-	 * @param list The nearby monsters that would prevent the player from sleeping, if any
-	 */
-
-	private static List<MonsterEntity> list;
+	private static List list;
 	private static final List<MonsterEntity> empty = Collections.emptyList();
 
 	public static void onTrySleep(List list, PlayerEntity player) {
