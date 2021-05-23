@@ -1,18 +1,10 @@
 package frankv.bettersafebed;
 
-import org.apache.commons.lang3.tuple.Pair;
+import net.fabricmc.api.ModInitializer;
 
-import net.minecraftforge.fml.ExtensionPoint;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.network.FMLNetworkConstants;
-
-@Mod(BetterSafeBed.MODID)
-public class BetterSafeBed {
-	public static final String MODID = "bettersafebed";
-
-	public BetterSafeBed() {
-		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST,
-			() -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a,b) -> true));
+public class BetterSafeBed implements ModInitializer {
+	@Override
+	public void onInitialize() {
+		System.out.println("Better Safe Bed loaded.");
 	}
 }

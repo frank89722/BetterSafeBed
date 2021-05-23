@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "bettersafebed",
+  "version": "${version}",
+
+  "name": "BetterSafeBed",
+  "description": "Let you able to sleep when the hostile mobs around the bed can't target you.",
+  "authors": [
+    "frankV"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": ""
+  },
+
+  "license": "MIT",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "frankv.bettersafebed.BetterSafeBed"
+    ]
+  },
+  "mixins": [
+    "bettersafebed.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
