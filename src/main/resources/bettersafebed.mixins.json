@@ -3,6 +3,7 @@
   "minVersion": "0.8",
   "package": "frankv.bettersafebed.mixins",
   "compatibilityLevel": "JAVA_8",
+  "priority": 100,
   "mixins": [
     "ServerPlayerEntityMixin"
   ],
