@@ -1,14 +1,13 @@
 {
 	"required": true,
 	"package": "frankv.bettersafebed.mixins",
-	"compatibilityLevel": "JAVA_8",
 	"refmap": "bettersafebed.refmap.json",
-	"mixins": 
-	[
+	"compatibilityLevel": "JAVA_8",
+	"priority": 100,
+	"mixins": [
 		"ServerPlayerEntityMixin"
 	],
-	"injectors": 
-	{
+	"injectors": {
 		"defaultRequire": 1
 	},
 	"minVersion": "0.8"
