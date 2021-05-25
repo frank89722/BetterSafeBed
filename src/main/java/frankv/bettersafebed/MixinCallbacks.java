@@ -1,7 +1,7 @@
 package frankv.bettersafebed;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.entity.monster.MonsterEntity;
@@ -9,29 +9,35 @@ import net.minecraft.entity.player.PlayerEntity;
 
 public class MixinCallbacks {
 	private static List list;
-	private static final List<MonsterEntity> empty = Collections.emptyList();
+	private static final List empty = Collections.emptyList();
 
 	public static void onTrySleep(List list, PlayerEntity player) {
 		if (list != null) {
 			MixinCallbacks.list = list;
-			if(shouldSleep(player)) list.clear();
+			checkList(player);
 		}
 	}
 
-	private static boolean shouldSleep(PlayerEntity player) {
+	private static void checkList(PlayerEntity player) {
 		if (!list.isEmpty()) {
-			for (Object object : list) {
-				if (object instanceof MonsterEntity) {
-					if ((((MonsterEntity) object).getTarget() instanceof PlayerEntity)) {
-						if(((MonsterEntity) object).getTarget().getEntity() == player) return false;
-					}
+			Iterator it = list.iterator();
+			while (it.hasNext()) {
+				Object o = it.next();
+				if (!(o instanceof MonsterEntity)) {
+					it.remove();
+					continue;
 				}
+				MonsterEntity m = (MonsterEntity) o;
+				if (!(m.getTarget() instanceof PlayerEntity)) {
+					it.remove();
+					continue;
+				}
+				if(m.getTarget() != player) it.remove();
 			}
 		}
-		return true;
 	}
 
-	public static List<MonsterEntity> getList() {
+	public static List getList() {
 		if (list == null) return empty;
 		return list;
 	}
