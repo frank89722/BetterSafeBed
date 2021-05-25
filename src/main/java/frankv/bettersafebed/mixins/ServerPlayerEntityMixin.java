@@ -32,8 +32,8 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 		MixinCallbacks.onTrySleep(list, (PlayerEntity)this.getVehicle());
 	}
 
-	@ModifyVariable(method = "trySleep", at = @At("STORE"), ordinal = 0)
-	private List<HostileEntity> injected(List<HostileEntity> list) {
+	@ModifyVariable(method = "trySleep", at = @At(value="INVOKE_ASSIGN", target="net/minecraft/world/World.getEntitiesByClass (Ljava/lang/Class;Lnet/minecraft/util/math/Box;Ljava/util/function/Predicate;)Ljava/util/List;", ordinal=0))
+	private List<HostileEntity> injected(List list) {
 		return MixinCallbacks.getList();
 	}
 }
