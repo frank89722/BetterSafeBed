@@ -9,18 +9,13 @@
     "frankV"
   ],
   "contact": {
-    "homepage": "",
-    "sources": ""
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/better-safe-bed",
+    "sources": "https://github.com/frank89722/BetterSafeBed"
   },
 
   "license": "MIT",
 
   "environment": "*",
-  "entrypoints": {
-    "main": [
-      "frankv.bettersafebed.BetterSafeBed"
-    ]
-  },
   "mixins": [
     "bettersafebed.mixins.json"
   ],
@@ -28,8 +23,5 @@
   "depends": {
     "fabricloader": ">=0.7.4",
     "minecraft": "1.16.x"
-  },
-  "suggests": {
-    "another-mod": "*"
   }
 }
