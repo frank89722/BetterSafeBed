@@ -16,7 +16,7 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = "forge-1.16.5-1.3"
+version = "forge-1.16.5-1.4"
 group = "frankv.bettersafebed"
 archivesBaseName = "bettersafebed"
 
