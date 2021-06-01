@@ -5,6 +5,7 @@
 
   "name": "BetterSafeBed",
   "description": "Let you able to sleep when the hostile mobs around the bed can't target you.",
+  "icon": "assets/bettersafebed/icon.png",
   "authors": [
     "frankV"
   ],
