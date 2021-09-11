@@ -2,11 +2,11 @@
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
-        maven { url = 'https://repo.spongepowered.org/maven/' }
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
@@ -16,20 +16,23 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = "forge-1.16.5-1.4"
+version = "1.17.1-a-forge"
 group = "frankv.bettersafebed"
 archivesBaseName = "bettersafebed"
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+
+println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
 minecraft {
-    mappings channel: 'official', version: "1.16.5"
+    mappings channel: 'official', version: "1.17.1"
     
     runs {
         client {
             workingDirectory project.file('run')
+            property 'mixin.env.disableRefMap', 'true'
             property 'forge.logging.console.level', 'debug'
-            property 'mixin.debug.export', 'true'
+            property 'forge.logging.markers', 'REGISTRIES'
             property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
             arg "-mixin.config=bettersafebed.mixins.json"
 
@@ -42,8 +45,9 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
+            property 'mixin.env.disableRefMap', 'true'
             property 'forge.logging.console.level', 'debug'
-            property 'mixin.debug.export', 'true'
+            property 'forge.logging.markers', 'REGISTRIES'
             property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
             arg "-mixin.config=bettersafebed.mixins.json"
 
@@ -56,8 +60,9 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
+            property 'mixin.env.disableRefMap', 'true'
             property 'forge.logging.console.level', 'debug'
-            property 'mixin.debug.export', 'true'
+            property 'forge.logging.markers', 'REGISTRIES'
             property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
             arg "-mixin.config=bettersafebed.mixins.json"
 
@@ -72,16 +77,48 @@ minecraft {
     }
 }
 
+sourceSets.main.resources { srcDir 'src/resources' }
+
+// should remove when forge add mixin
+//--------------------------------------
+repositories {
+    maven { // Mixins for early 1.17
+        url 'https://repo.spongepowered.org/repository/maven-public/'
+    }
+}
+
+configurations {
+    library
+    implementation.extendsFrom library
+}
+
+minecraft.runs.all {
+    lazyToken('minecraft_classpath') {
+        configurations.library.copyRecursive().resolve().collect { it.absolutePath }.join(File.pathSeparator)
+    }
+}
+
+afterEvaluate {
+    configurations.compileClasspath.resolvedConfiguration.firstLevelModuleDependencies.each { dep ->
+        dependencies.annotationProcessor([group: dep.moduleGroup, name: dep.moduleName, version: dep.moduleVersion])
+    }
+}
+//--------------------------------------
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
+    library 'org.spongepowered:mixin:0.8.4-SNAPSHOT'
+
+    //remove this when forge contained mixin
+    library "com.google.guava:guava:21.0"
+
+    annotationProcessor "org.spongepowered:mixin:0.8.4-SNAPSHOT:processor"
+}
+
 mixin {
     add sourceSets.main, "bettersafebed.refmap.json"
 }
 
-dependencies {
-    minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
-    //annotationProcessor "org.spongepowered:mixin:0.7-SNAPSHOT:processor"
-}
-
-// Example for how to get properties into the manifest for reading by the runtime..
 jar {
     manifest {
         attributes([
