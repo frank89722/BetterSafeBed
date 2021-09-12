@@ -15,7 +15,7 @@ Let you able to sleep when the hostile mobs around the bed can't target you.
 [[dependencies.bettersafebed]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
-    versionRange="[37,)" #mandatory
+    versionRange="[37.0.59,)" #mandatory
     ordering="NONE"
     side="BOTH"
 # Here's another dependency
