@@ -16,7 +16,7 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = "1.17.1-a-forge"
+version = "1.17.1-forge-b"
 group = "frankv.bettersafebed"
 archivesBaseName = "bettersafebed"
 
@@ -79,40 +79,11 @@ minecraft {
 
 sourceSets.main.resources { srcDir 'src/resources' }
 
-// should remove when forge add mixin
-//--------------------------------------
-repositories {
-    maven { // Mixins for early 1.17
-        url 'https://repo.spongepowered.org/repository/maven-public/'
-    }
-}
-
-configurations {
-    library
-    implementation.extendsFrom library
-}
-
-minecraft.runs.all {
-    lazyToken('minecraft_classpath') {
-        configurations.library.copyRecursive().resolve().collect { it.absolutePath }.join(File.pathSeparator)
-    }
-}
-
-afterEvaluate {
-    configurations.compileClasspath.resolvedConfiguration.firstLevelModuleDependencies.each { dep ->
-        dependencies.annotationProcessor([group: dep.moduleGroup, name: dep.moduleName, version: dep.moduleVersion])
-    }
-}
-//--------------------------------------
-
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
-    library 'org.spongepowered:mixin:0.8.4-SNAPSHOT'
+    compileOnly 'org.spongepowered:mixin:0.8.4'
 
-    //remove this when forge contained mixin
-    library "com.google.guava:guava:21.0"
-
-    annotationProcessor "org.spongepowered:mixin:0.8.4-SNAPSHOT:processor"
+    annotationProcessor "org.spongepowered:mixin:0.8.4:processor"
 }
 
 mixin {
