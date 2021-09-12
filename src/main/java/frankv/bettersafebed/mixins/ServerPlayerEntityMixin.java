@@ -15,7 +15,6 @@ public class ServerPlayerEntityMixin {
 	private List additionalCheck(List<Monster> list) {
 		list.removeIf(m -> !(m.getTarget() instanceof Player)
 				||  m.getTarget().getVehicle() != ((Player)(Object)this).getVehicle());
-		System.out.println("do!");
 		return list;
 	}
 }
