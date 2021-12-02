@@ -1,9 +1,9 @@
 package frankv.bettersafebed;
 
 import net.minecraftforge.fml.IExtensionPoint;
-import net.minecraftforge.fmllegacy.network.FMLNetworkConstants;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.network.NetworkConstants;
 
 @Mod(BetterSafeBed.MODID)
 public class BetterSafeBed {
@@ -11,6 +11,6 @@ public class BetterSafeBed {
 
 	public BetterSafeBed() {
 		ModLoadingContext.get()
-				.registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> FMLNetworkConstants.IGNORESERVERONLY, (remote, isServer) -> true));
+				.registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY, (remote, isServer) -> true));
 	}
 }

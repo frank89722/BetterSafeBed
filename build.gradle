@@ -16,16 +16,16 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = "1.17.1-forge-b"
+version = "1.18-forge-a"
 group = "frankv.bettersafebed"
 archivesBaseName = "bettersafebed"
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
 minecraft {
-    mappings channel: 'official', version: "1.17.1"
+    mappings channel: 'official', version: "1.18"
     
     runs {
         client {
@@ -81,9 +81,9 @@ sourceSets.main.resources { srcDir 'src/resources' }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
-    compileOnly 'org.spongepowered:mixin:0.8.4'
+    compileOnly 'org.spongepowered:mixin:0.8.5'
 
-    annotationProcessor "org.spongepowered:mixin:0.8.4:processor"
+    annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
 }
 
 mixin {
