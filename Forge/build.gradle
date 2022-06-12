@@ -1,0 +1,161 @@
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net' }
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath 'org.spongepowered:mixingradle:0.7.+'
+    }
+}
+
+plugins {
+    id 'com.matthewprenger.cursegradle' version '1.4.0'
+    id "com.modrinth.minotaur" version "2.+"
+}
+
+def ENV = System.getenv()
+
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+apply plugin: 'org.spongepowered.mixin'
+
+version = "${version}"
+group = 'frankv.bettersafebed'
+archivesBaseName = "${mod_id}-forge-${minecraft_version}"
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
+
+println("##[set-output name=modid;]${archivesBaseName}")
+println("##[set-output name=version;]${version}")
+
+minecraft {
+    mappings channel: 'official', version: '1.18.2'
+
+    if (project.hasProperty('forge_ats_enabled') && project.findProperty('forge_ats_enabled').toBoolean()) {
+        // This location is hardcoded in Forge and can not be changed.
+        // https://github.com/MinecraftForge/MinecraftForge/blob/be1698bb1554f9c8fa2f58e32b9ab70bc4385e60/fmlloader/src/main/java/net/minecraftforge/fml/loading/moddiscovery/ModFile.java#L123
+        accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+        project.logger.debug('Forge Access Transformers are enabled for this project.')
+    }
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+            ideaModule "${rootProject.name}.${project.name}.main"
+            taskName 'Client'
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                jmi {
+                    source sourceSets.main
+                    source project(":Common").sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+            ideaModule "${rootProject.name}.${project.name}.main"
+            taskName 'Server'
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                jmi {
+                    source sourceSets.main
+                    source project(":Common").sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+            ideaModule "${rootProject.name}.${project.name}.main"
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            taskName 'Data'
+            args '--mod', 'bettersafebed', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+
+            mods {
+                jmi {
+                    source sourceSets.main
+                    source project(":Common").sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
+
+    implementation project(":Common")
+}
+
+mixin {
+    add project(":Common").sourceSets.main, "bettersafebed.refmap.json"
+    config "bettersafebed.mixins.json"
+
+    debug.verbose = true
+    debug.export = true
+    dumpTargetOnFailure = true
+
+    quiet
+}
+
+tasks.withType(JavaCompile) {
+    source(project(":Common").sourceSets.main.allSource)
+}
+
+processResources {
+    from project(":Common").sourceSets.main.resources
+}
+
+jar.finalizedBy('reobfJar')
+
+if (ENV.CF_TOKEN) {
+    curseforge {
+        apiKey = ENV.CF_TOKEN
+        project {
+            id = "${curse_id}"
+            releaseType = "${release_type}"
+            addGameVersion "Forge"
+            addGameVersion "${minecraft_version}"
+            mainArtifact(jar)
+            changelog = ENV.CHANGELOG
+            changelogType = 'markdown'
+        }
+    }
+}
+
+if (ENV.MODRINTH_TOKEN) {
+    modrinth {
+        token = ENV.MODRINTH_TOKEN
+        projectId = "${modrinth_id}"
+        versionType = "${release_type}"
+        versionNumber = "${archivesBaseName}-${version}"
+        uploadFile = jar
+        gameVersions = ["${minecraft_version}"]
+        changelog = ENV.CHANGELOG
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+        }
+    }
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "frankv.bettersafebed.mixin",
+    "compatibilityLevel": "JAVA_17",
+    "mixins": [
+      "ServerPlayerMixin"
+    ],
+    "injectors": {
+      "defaultRequire": 1
+    }
+  }
+  
