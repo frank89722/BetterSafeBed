@@ -20,7 +20,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
-version = "${version}"
+version = ENV.GITHUB_RUN_NUMBER ? ENV.GITHUB_RUN_NUMBER : '0'
 group = 'frankv.bettersafebed'
 archivesBaseName = "${mod_id}-forge-${minecraft_version}"
 

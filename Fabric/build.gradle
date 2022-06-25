@@ -8,7 +8,7 @@ plugins {
 
 def ENV = System.getenv()
 
-version = "${version}"
+version = ENV.GITHUB_RUN_NUMBER ? ENV.GITHUB_RUN_NUMBER : '0'
 archivesBaseName = "${mod_id}-fabric-${minecraft_version}"
 
 repositories {
@@ -104,6 +104,7 @@ if (ENV.MODRINTH_TOKEN) {
         versionNumber = "${archivesBaseName}-${version}"
         uploadFile = remapJar
         gameVersions = ["${minecraft_version}"]
+        loaders = ["fabric", "quilt"]
         changelog = ENV.CHANGELOG
     }
 }
