@@ -125,7 +125,7 @@ if (ENV.CF_TOKEN) {
         apiKey = ENV.CF_TOKEN
         project {
             id = "${curse_id}"
-            releaseType = "${release_type}"
+            releaseType = "beta"
             addGameVersion "Forge"
             addGameVersion "${minecraft_version}"
             mainArtifact(jar)
@@ -139,7 +139,7 @@ if (ENV.MODRINTH_TOKEN) {
     modrinth {
         token = ENV.MODRINTH_TOKEN
         projectId = "${modrinth_id}"
-        versionType = "${release_type}"
+        versionType = "beta"
         versionNumber = "${archivesBaseName}-${version}"
         uploadFile = jar
         gameVersions = ["${minecraft_version}"]

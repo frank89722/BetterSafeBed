@@ -81,8 +81,9 @@ if (ENV.CF_TOKEN) {
         apiKey = ENV.CF_TOKEN
         project {
             id = "${curse_id}"
-            releaseType = "${release_type}"
+            releaseType = "release"
             addGameVersion "Fabric"
+            addGameVersion "Quilt"
             addGameVersion "${minecraft_version}"
             mainArtifact(remapJar.archivePath)
             changelog = ENV.CHANGELOG
@@ -100,7 +101,7 @@ if (ENV.MODRINTH_TOKEN) {
     modrinth {
         token = ENV.MODRINTH_TOKEN
         projectId = "${modrinth_id}"
-        versionType = "${release_type}"
+        versionType = "release"
         versionNumber = "${archivesBaseName}-${version}"
         uploadFile = remapJar
         gameVersions = ["${minecraft_version}"]
