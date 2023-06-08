@@ -1,9 +1,8 @@
 {
   "required": true,
-  "package": "frankv.bettersafebed.mixin",
+  "package": "me.frankv.bettersafebed.mixin",
   "refmap": "bettersafebed.refmap.json",
-  "compatibilityLevel": "JAVA_16",
-  "priority": 100,
+  "compatibilityLevel": "JAVA_17",
   "mixins": [
     "ServerPlayerMixin"
   ],

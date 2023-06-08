@@ -3,6 +3,9 @@ subprojects {
     apply plugin: 'java'
     
     java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+    def ENV = System.getenv()
+    version = "${minecraft_version}-${base_version}-${ENV.GITHUB_RUN_NUMBER ?: 'dev'}"
         
     jar {
         manifest {
@@ -17,7 +20,7 @@ subprojects {
                 'Timestampe'              : System.currentTimeMillis(),
                 'Built-On-Java'           : "${System.getProperty('java.vm.version')} (${System.getProperty('java.vm.vendor')})",
                 'Build-On-Minecraft'      : minecraft_version,
-                "MixinConfigs"            : "bettersafebed.mixins.json"
+                "MixinConfigs"            : "${mod_id}.mixins.json"
             ])
         }
     }
