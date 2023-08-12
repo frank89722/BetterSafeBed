@@ -1,4 +1,4 @@
-# BetterSafeBed [![](https://img.shields.io/modrinth/dt/aUp4r9hY?label=modrinth)](https://modrinth.com/mod/staaaaaaaaaaaack) [![](https://cf.way2muchnoise.eu/short_484804_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/better-safe-bed)
+# BetterSafeBed [![](https://img.shields.io/modrinth/dt/aUp4r9hY?label=modrinth)](https://modrinth.com/mod/better-safe-bed) [![](https://cf.way2muchnoise.eu/short_484804_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/better-safe-bed)
 
 This mod solves the issue of being unable to sleep even when you are safe, due to a random mob lurking in the cave beneath your base, outside its walls or on its roof.
 
