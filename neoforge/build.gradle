@@ -46,7 +46,7 @@ processResources {
 }
 
 def ENV = System.getenv()
-def release_title = "[Forge] v${version}"
+def release_title = "[NeoForge] v${version}"
 
 if (ENV.CF_TOKEN) {
     curseforge {
