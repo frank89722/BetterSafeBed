@@ -32,8 +32,6 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
-    annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
-
     implementation project(":common")
 }
 
