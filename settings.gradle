@@ -6,6 +6,10 @@ pluginManagement {
             url = 'https://maven.fabricmc.net/'
         }
         maven {
+            name = 'NeoForge'
+            url = 'https://maven.neoforged.net/releases'
+        }
+        maven {
             name = 'Sponge Snapshots'
             url = 'https://repo.spongepowered.org/repository/maven-public/'
         }
@@ -13,4 +17,4 @@ pluginManagement {
 }
 
 rootProject.name = 'BetterSafeBed'
-include("Common", "Fabric", "Forge")
+include("common", "fabric", "neoforge")

@@ -1,6 +1,5 @@
-
 modLoader="javafml"
-loaderVersion="[46,)"
+loaderVersion="[1,)"
 license="MIT"
 issueTrackerURL="https://github.com/frank89722/BetterSafeBed/issues"
 [[mods]] #mandatory
@@ -14,15 +13,16 @@ description='''
 Let you able to sleep when the hostile mobs around the bed can't target you.
 '''
 [[dependencies.bettersafebed]]
-modId="forge"
-mandatory=true
-versionRange="[46,)"
-ordering="NONE"
-side="BOTH"
-# Here's another dependency
+    modId="neoforge"
+    mandatory=true
+    versionRange="[20.2,)"
+    ordering="NONE"
+    side="BOTH"
 [[dependencies.bettersafebed]]
-modId="minecraft"
-mandatory=true
-versionRange="[1.20,1.21)"
-ordering="NONE"
-side="BOTH"
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20,1.21)"
+    ordering="NONE"
+    side="BOTH"
+[[mixins]]
+    config="bettersafebed.mixins.json"
