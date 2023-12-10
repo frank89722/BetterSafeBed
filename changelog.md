@@ -1,1 +1,2 @@
-update to MC1.20
+- update to MC1.20.2
+- switch to NeoForge for now
