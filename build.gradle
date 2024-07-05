@@ -3,9 +3,9 @@ plugins {
 }
 
 subprojects {
-    apply plugin: 'java'
+    apply plugin: 'java-library'
     
-    java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+    java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
     def ENV = System.getenv()
     version = "${minecraft_version}-${ENV.RUN_NUMBER ?: 'dev'}"
@@ -28,8 +28,8 @@ subprojects {
     }
     
     repositories {
-
-        mavenCentral()
+        mavenLocal()
+//        mavenCentral()
 
         maven {
             name = 'Sponge / Mixin'
@@ -46,7 +46,7 @@ subprojects {
     tasks.withType(JavaCompile).configureEach {
     
         it.options.encoding = 'UTF-8'
-        it.options.release = 17
+        it.options.release = 21
     }
 
     // Disables Gradle's custom module metadata from being published to maven. The

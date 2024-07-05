@@ -2,7 +2,7 @@
   "required": true,
   "package": "me.frankv.bettersafebed.mixin",
   "refmap": "bettersafebed.refmap.json",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "JAVA_21",
   "mixins": [
     "MonsterMixin"
   ],
